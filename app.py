@@ -30,6 +30,7 @@ def fetchMovies(kw):
     for movie in movies:
         movieInfo = evalChunks(movie.text)
         title = movieInfo['Movie']
+        rates = movieInfo['Vulgarity']+'.'+movieInfo['Violence']+'.'+movieInfo['Profanity']
 
         # now fetch from OpenMovieDataBaseAPi
         murl = "http://www.omdbapi.com/?t="+title+"&apikey=1785ad28"
@@ -44,7 +45,7 @@ def fetchMovies(kw):
                     ratings = movieJsonData['Ratings'][0]['Value'] if movieJsonData['Ratings'][0]['Value'] else 'N/a'
 
                     st.subheader(movieJsonData['Title']+' - '+movieJsonData['Year'])
-                    st.write(movieJsonData['Genre']+", Rated:"+movieJsonData['Rated'])
+                    st.write(movieJsonData['Genre']+", Rated: "+movieJsonData['Rated']+" ("+rates+")")
                     st.write("IMDB Rating: "+ratings)
                     st.write("Starring: "+movieJsonData['Actors'])
                     st.caption("Plot: "+movieJsonData['Plot'])
